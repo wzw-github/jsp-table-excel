@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.exam.mapper.BooksMapper">
+	<insert id="addBooks" parameterType="Books">
+		insert into books
+		values(null,#{bookName},#{bookAuthor},#{bookPublish},#{bookPage},#{bookPrice},#{createDate})
+	</insert>
+	<select id="getBooksList" parameterType="Books" resultType="Books">
+		select * from books
+		<where>
+			<choose>
+				<when test="bookName!=null and bookName!=''">
+					and bookName like concat('%',#{bookName},'%')
+				</when>
+				<when test="bookAuthor!=null and bookAuthor!=''">
+					and bookAuthor like concat('%',#{bookAuthor},'%')
+				</when>
+				<when test="bookPublish!=null and bookPublish!=''">
+					and bookPublish like concat('%',#{bookPublish},'%')
+				</when>
+			</choose>
+		</where>
+	</select>
+</mapper>
